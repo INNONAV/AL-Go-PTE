@@ -66,14 +66,14 @@ jobs:
 
       - name: Read settings
         id: ReadSettings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
           get: templateUrl
 
       - name: Get Workflow Multi-Run Branches
         id: GetBranches
-        uses: INNONAV/AL-Go/Actions/GetWorkflowMultiRunBranches@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/GetWorkflowMultiRunBranches@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
           includeBranches: ${{ github.event.inputs.includeBranches }}
@@ -102,7 +102,7 @@ jobs:
 
     steps:
       - name: Dump Workflow Information
-        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
 
@@ -113,19 +113,19 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
           get: commitOptions
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -152,7 +152,7 @@ jobs:
           Add-Content -Encoding UTF8 -Path $env:GITHUB_ENV -Value "downloadLatest=$downloadLatest"
 
       - name: Update AL-Go system files
-        uses: INNONAV/AL-Go/Actions/CheckForUpdates@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/CheckForUpdates@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -166,7 +166,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

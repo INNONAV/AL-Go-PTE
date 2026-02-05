@@ -65,14 +65,14 @@ jobs:
           lfs: true
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
           get: type,powerPlatformSolutionFolder,appRevision,appBuild
 
       - name: Build
-        uses: INNONAV/AL-Go/Actions/BuildPowerPlatform@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/BuildPowerPlatform@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: ${{ inputs.shell }}
           solutionFolder: ${{ inputs.project }}
@@ -83,7 +83,7 @@ jobs:
 
       - name: Calculate Artifact names
         id: calculateArtifactsNames
-        uses: INNONAV/AL-Go/Actions/CalculateArtifactNames@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/CalculateArtifactNames@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         if: success() || failure()
         with:
           shell: ${{ inputs.shell }}

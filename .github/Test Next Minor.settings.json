@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/860bd007e76724cb6077e753303393538c541b45/.Modules/settings.schema.json",
+  "$schema": "https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/.Modules/settings.schema.json",
   "artifact": "////nextminor",
   "cacheImageName": "",
   "versioningStrategy": 15

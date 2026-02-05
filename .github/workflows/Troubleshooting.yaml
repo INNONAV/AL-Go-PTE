@@ -30,7 +30,7 @@ jobs:
           lfs: true
 
       - name: Troubleshooting
-        uses: INNONAV/AL-Go/Actions/Troubleshooting@860bd007e76724cb6077e753303393538c541b45
+        uses: INNONAV/AL-Go/Actions/Troubleshooting@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
