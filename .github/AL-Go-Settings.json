@@ -1,0 +1,5 @@
+{
+  "$schema": "https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/860bd007e76724cb6077e753303393538c541b45/.Modules/settings.schema.json",
+  "type": "PTE",
+  "templateUrl": "https://github.com/INNONAV/AL-Go-PTE@main"
+}
