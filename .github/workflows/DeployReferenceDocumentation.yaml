@@ -30,24 +30,24 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@ce74ca9100b3feec8226ef3eef0155872c125e2e
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@d85ced53f116214ab8b9a89ada23d6fc2c47d7a6
         with:
           shell: powershell
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@ce74ca9100b3feec8226ef3eef0155872c125e2e
+        uses: INNONAV/AL-Go/Actions/ReadSettings@d85ced53f116214ab8b9a89ada23d6fc2c47d7a6
         with:
           shell: powershell
 
       - name: Determine ArtifactUrl
         id: determineArtifactUrl
-        uses: INNONAV/AL-Go/Actions/DetermineArtifactUrl@ce74ca9100b3feec8226ef3eef0155872c125e2e
+        uses: INNONAV/AL-Go/Actions/DetermineArtifactUrl@d85ced53f116214ab8b9a89ada23d6fc2c47d7a6
         with:
           shell: powershell
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@ce74ca9100b3feec8226ef3eef0155872c125e2e
+        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@d85ced53f116214ab8b9a89ada23d6fc2c47d7a6
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -60,7 +60,7 @@ jobs:
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 
       - name: Build Reference Documentation
-        uses: INNONAV/AL-Go/Actions/BuildReferenceDocumentation@ce74ca9100b3feec8226ef3eef0155872c125e2e
+        uses: INNONAV/AL-Go/Actions/BuildReferenceDocumentation@d85ced53f116214ab8b9a89ada23d6fc2c47d7a6
         with:
           shell: powershell
           artifacts: 'latest'
@@ -78,7 +78,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@ce74ca9100b3feec8226ef3eef0155872c125e2e
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@d85ced53f116214ab8b9a89ada23d6fc2c47d7a6
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
