@@ -42,7 +42,7 @@ jobs:
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
-        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
@@ -51,19 +51,19 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -82,7 +82,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         if: steps.DetermineDeploymentEnvironments.outputs.UnknownEnvironment == 1
         with:
           shell: powershell
@@ -114,7 +114,7 @@ jobs:
             Write-Host "No AuthContext provided for $envName, initiating Device Code flow"
             $ALGoHelperPath = "$([System.IO.Path]::GetTempFileName()).ps1"
             $webClient = New-Object System.Net.WebClient
-            $webClient.DownloadFile('https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/AL-Go-Helper.ps1', $ALGoHelperPath)
+            $webClient.DownloadFile('https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/AL-Go-Helper.ps1', $ALGoHelperPath)
             . $ALGoHelperPath
             DownloadAndImportBcContainerHelper
             $authContext = New-BcAuthContext -includeDeviceLogin -deviceLoginTimeout ([TimeSpan]::FromSeconds(0))
@@ -150,21 +150,21 @@ jobs:
           Add-Content -Encoding UTF8 -Path $env:GITHUB_OUTPUT -Value "envName=$envName"
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: ${{ matrix.shell }}
           get: type,powerPlatformSolutionFolder
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: ${{ matrix.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: '${{ steps.envName.outputs.envName }}-AuthContext,${{ steps.envName.outputs.envName }}_AuthContext,AuthContext'
 
       - name: Get Artifacts for deployment
-        uses: INNONAV/AL-Go/Actions/GetArtifactsForDeployment@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/GetArtifactsForDeployment@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: ${{ matrix.shell }}
           artifactsVersion: ${{ github.event.inputs.appVersion }}
@@ -172,7 +172,7 @@ jobs:
 
       - name: Deploy to Business Central
         id: Deploy
-        uses: INNONAV/AL-Go/Actions/Deploy@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/Deploy@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -185,7 +185,7 @@ jobs:
 
       - name: Deploy to Power Platform
         if: env.type == 'PTE' && env.powerPlatformSolutionFolder != ''
-        uses: INNONAV/AL-Go/Actions/DeployPowerPlatform@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DeployPowerPlatform@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -204,7 +204,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

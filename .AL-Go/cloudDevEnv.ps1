@@ -141,12 +141,12 @@ Write-Host -ForegroundColor Yellow @'
 
 $tmpFolder = Join-Path ([System.IO.Path]::GetTempPath()) "$([Guid]::NewGuid().ToString())"
 New-Item -Path $tmpFolder -ItemType Directory -Force | Out-Null
-$GitHubHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/Github-Helper.psm1' -folder $tmpFolder -notifyAuthenticatedAttempt
-$ReadSettingsModule = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/.Modules/ReadSettings.psm1' -folder $tmpFolder
-$debugLoggingModule = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/.Modules/DebugLogHelper.psm1' -folder $tmpFolder
-$ALGoHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/AL-Go-Helper.ps1' -folder $tmpFolder
-DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/.Modules/settings.schema.json' -folder $tmpFolder | Out-Null
-DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/640d50e4333e9487bb295cbfb48bfb1ffc3b6416/Environment.Packages.proj' -folder $tmpFolder | Out-Null
+$GitHubHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/Github-Helper.psm1' -folder $tmpFolder -notifyAuthenticatedAttempt
+$ReadSettingsModule = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/.Modules/ReadSettings.psm1' -folder $tmpFolder
+$debugLoggingModule = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/.Modules/DebugLogHelper.psm1' -folder $tmpFolder
+$ALGoHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/AL-Go-Helper.ps1' -folder $tmpFolder
+DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/.Modules/settings.schema.json' -folder $tmpFolder | Out-Null
+DownloadHelperFile -url 'https://raw.githubusercontent.com/INNONAV/AL-Go/Actions/1daed1b32058623d30b9291af9891eaf9840e308/Environment.Packages.proj' -folder $tmpFolder | Out-Null
 
 Import-Module $GitHubHelperPath
 Import-Module $ReadSettingsModule

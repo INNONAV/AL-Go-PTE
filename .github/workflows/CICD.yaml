@@ -51,7 +51,7 @@ jobs:
       trackALAlertsInGitHub: ${{ steps.SetALCodeAnalysisVar.outputs.trackALAlertsInGitHub }}
     steps:
       - name: Dump Workflow Information
-        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
@@ -62,13 +62,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           get: type,powerPlatformSolutionFolder,useGitSubmodules,trackALAlertsInGitHub
@@ -82,7 +82,7 @@ jobs:
       - name: Read submodules token
         id: ReadSubmodulesToken
         if: env.useGitSubmodules != 'false' && env.useGitSubmodules != ''
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -103,7 +103,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: INNONAV/AL-Go/Actions/DetermineProjectsToBuild@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DetermineProjectsToBuild@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
@@ -116,7 +116,7 @@ jobs:
 
       - name: Determine Delivery Target Secrets
         id: DetermineDeliveryTargetSecrets
-        uses: INNONAV/AL-Go/Actions/DetermineDeliveryTargets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DetermineDeliveryTargets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           projectsJson: '${{ steps.determineProjectsToBuild.outputs.ProjectsJson }}'
@@ -124,7 +124,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -132,7 +132,7 @@ jobs:
 
       - name: Determine Delivery Targets
         id: DetermineDeliveryTargets
-        uses: INNONAV/AL-Go/Actions/DetermineDeliveryTargets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DetermineDeliveryTargets@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -142,7 +142,7 @@ jobs:
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -158,21 +158,21 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           get: templateUrl
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: 'ghTokenWorkflow'
 
       - name: Check for updates to AL-Go system files
-        uses: INNONAV/AL-Go/Actions/CheckForUpdates@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/CheckForUpdates@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -240,7 +240,7 @@ jobs:
       - name: Process AL Code Analysis Logs
         id: ProcessALCodeAnalysisLogs
         if: (success() || failure())
-        uses: INNONAV/AL-Go/Actions/ProcessALCodeAnalysisLogs@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ProcessALCodeAnalysisLogs@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
@@ -274,13 +274,13 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
       - name: Determine ArtifactUrl
         id: determineArtifactUrl
-        uses: INNONAV/AL-Go/Actions/DetermineArtifactUrl@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DetermineArtifactUrl@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
@@ -289,7 +289,7 @@ jobs:
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 
       - name: Build Reference Documentation
-        uses: INNONAV/AL-Go/Actions/BuildReferenceDocumentation@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/BuildReferenceDocumentation@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           artifacts: '.artifacts'
@@ -330,7 +330,7 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: ${{ matrix.shell }}
           get: type,powerPlatformSolutionFolder
@@ -344,7 +344,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: ${{ matrix.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -352,7 +352,7 @@ jobs:
 
       - name: Deploy to Business Central
         id: Deploy
-        uses: INNONAV/AL-Go/Actions/Deploy@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/Deploy@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -364,7 +364,7 @@ jobs:
 
       - name: Deploy to Power Platform
         if: env.type == 'PTE' && env.powerPlatformSolutionFolder != ''
-        uses: INNONAV/AL-Go/Actions/DeployPowerPlatform@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/DeployPowerPlatform@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -392,20 +392,20 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: '${{ matrix.deliveryTarget }}Context'
 
       - name: Deliver
-        uses: INNONAV/AL-Go/Actions/Deliver@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/Deliver@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -425,7 +425,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@640d50e4333e9487bb295cbfb48bfb1ffc3b6416
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@1daed1b32058623d30b9291af9891eaf9840e308
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
