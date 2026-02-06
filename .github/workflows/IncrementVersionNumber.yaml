@@ -48,7 +48,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Dump Workflow Information
-        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         with:
           shell: powershell
 
@@ -57,24 +57,24 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         with:
           shell: powershell
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/ReadSettings@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         with:
           shell: powershell
 
       - name: Validate Workflow Input
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        uses: INNONAV/AL-Go/Actions/ValidateWorkflowInput@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/ValidateWorkflowInput@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         with:
           shell: powershell
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -82,7 +82,7 @@ jobs:
           useGhTokenWorkflowForPush: '${{ github.event.inputs.useGhTokenWorkflow }}'
 
       - name: Increment Version Number
-        uses: INNONAV/AL-Go/Actions/IncrementVersionNumber@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/IncrementVersionNumber@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         with:
           shell: powershell
           token: ${{ steps.ReadSecrets.outputs.TokenForPush }}
@@ -93,7 +93,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@1daed1b32058623d30b9291af9891eaf9840e308
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
