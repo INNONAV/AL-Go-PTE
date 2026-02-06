@@ -31,7 +31,7 @@ jobs:
     if: (github.event.pull_request.base.repo.full_name != github.event.pull_request.head.repo.full_name) && (github.event_name != 'pull_request')
     runs-on: windows-latest
     steps:
-      - uses: INNONAV/AL-Go/Actions/VerifyPRChanges@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+      - uses: INNONAV/AL-Go/Actions/VerifyPRChanges@ce74ca9100b3feec8226ef3eef0155872c125e2e
 
   Initialization:
     needs: [ PregateCheck ]
@@ -49,7 +49,7 @@ jobs:
       trackALAlertsInGitHub: ${{ steps.SetALCodeAnalysisVar.outputs.trackALAlertsInGitHub }}
     steps:
       - name: Dump Workflow Information
-        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
 
@@ -61,13 +61,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSettings@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           get: shortLivedArtifactsRetentionDays,trackALAlertsInGitHub
@@ -86,7 +86,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: INNONAV/AL-Go/Actions/DetermineProjectsToBuild@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DetermineProjectsToBuild@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
@@ -139,7 +139,7 @@ jobs:
       - name: Process AL Code Analysis Logs
         id: ProcessALCodeAnalysisLogs
         if: (success() || failure())
-        uses: INNONAV/AL-Go/Actions/ProcessALCodeAnalysisLogs@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ProcessALCodeAnalysisLogs@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
 
@@ -160,7 +160,7 @@ jobs:
     steps:
       - name: Pull Request Status Check
         id: PullRequestStatusCheck
-        uses: INNONAV/AL-Go/Actions/PullRequestStatusCheck@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/PullRequestStatusCheck@ce74ca9100b3feec8226ef3eef0155872c125e2e
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -168,7 +168,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@ce74ca9100b3feec8226ef3eef0155872c125e2e
         if: success() || failure()
         env:
           GITHUB_TOKEN: ${{ github.token }}

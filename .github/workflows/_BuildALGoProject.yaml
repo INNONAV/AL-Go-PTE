@@ -96,8 +96,6 @@ jobs:
       run:
         shell: ${{ inputs.shell }}
     name: ${{ inputs.projectName }} (${{ inputs.buildMode }})
-    env:
-      JOB_INDEX: "${{ strategy.job-index }}"
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -106,7 +104,7 @@ jobs:
           lfs: true
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSettings@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
@@ -115,7 +113,7 @@ jobs:
 
       - name: Determine whether to build project
         id: DetermineBuildProject
-        uses: INNONAV/AL-Go/Actions/DetermineBuildProject@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DetermineBuildProject@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           skippedProjectsJson: ${{ inputs.skippedProjectsJson }}
@@ -125,7 +123,7 @@ jobs:
       - name: Read secrets
         id: ReadSecrets
         if: steps.DetermineBuildProject.outputs.BuildIt == 'True' && github.event_name != 'pull_request'
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -143,7 +141,7 @@ jobs:
       - name: Determine ArtifactUrl
         id: determineArtifactUrl
         if: steps.DetermineBuildProject.outputs.BuildIt == 'True'
-        uses: INNONAV/AL-Go/Actions/DetermineArtifactUrl@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DetermineArtifactUrl@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
@@ -158,7 +156,7 @@ jobs:
       - name: Download Project Dependencies
         id: DownloadProjectDependencies
         if: steps.DetermineBuildProject.outputs.BuildIt == 'True'
-        uses: INNONAV/AL-Go/Actions/DownloadProjectDependencies@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DownloadProjectDependencies@ce74ca9100b3feec8226ef3eef0155872c125e2e
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -169,7 +167,7 @@ jobs:
           baselineWorkflowRunId: ${{ inputs.baselineWorkflowRunId }}
 
       - name: Build
-        uses: INNONAV/AL-Go/Actions/RunPipeline@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/RunPipeline@ce74ca9100b3feec8226ef3eef0155872c125e2e
         if: steps.DetermineBuildProject.outputs.BuildIt == 'True'
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
@@ -188,7 +186,7 @@ jobs:
       - name: Sign
         id: sign
         if: steps.DetermineBuildProject.outputs.BuildIt == 'True' && inputs.signArtifacts && env.doNotSignApps == 'False' && (env.keyVaultCodesignCertificateName != '' || (fromJson(env.trustedSigning).Endpoint != '' && fromJson(env.trustedSigning).Account != '' && fromJson(env.trustedSigning).CertificateProfile != '')) && (hashFiles(format('{0}/.buildartifacts/Apps/*.app',inputs.project)) != '')
-        uses: INNONAV/AL-Go/Actions/Sign@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/Sign@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           azureCredentialsJson: '${{ fromJson(steps.ReadSecrets.outputs.Secrets).AZURE_CREDENTIALS }}'
@@ -196,7 +194,7 @@ jobs:
 
       - name: Calculate Artifact names
         id: calculateArtifactsNames
-        uses: INNONAV/AL-Go/Actions/CalculateArtifactNames@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/CalculateArtifactNames@ce74ca9100b3feec8226ef3eef0155872c125e2e
         if: success() || failure()
         with:
           shell: ${{ inputs.shell }}
@@ -291,7 +289,7 @@ jobs:
       - name: Analyze Test Results
         id: analyzeTestResults
         if: (success() || failure()) && env.doNotRunTests == 'False'
-        uses: INNONAV/AL-Go/Actions/AnalyzeTests@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/AnalyzeTests@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
@@ -300,7 +298,7 @@ jobs:
       - name: Analyze BCPT Test Results
         id: analyzeTestResultsBCPT
         if: (success() || failure()) && env.doNotRunBcptTests == 'False'
-        uses: INNONAV/AL-Go/Actions/AnalyzeTests@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/AnalyzeTests@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
@@ -309,7 +307,7 @@ jobs:
       - name: Analyze Page Scripting Test Results
         id: analyzeTestResultsPageScripting
         if: (success() || failure()) && env.doNotRunpageScriptingTests == 'False'
-        uses: INNONAV/AL-Go/Actions/AnalyzeTests@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/AnalyzeTests@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
@@ -317,7 +315,7 @@ jobs:
 
       - name: Cleanup
         if: always() && steps.DetermineBuildProject.outputs.BuildIt == 'True'
-        uses: INNONAV/AL-Go/Actions/PipelineCleanup@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/PipelineCleanup@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}

@@ -51,7 +51,7 @@ jobs:
     runs-on: [ windows-latest ]
     steps:
       - name: Dump Workflow Information
-        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DumpWorkflowInfo@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
 
@@ -60,19 +60,19 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSettings@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           get: type
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -80,7 +80,7 @@ jobs:
           useGhTokenWorkflowForPush: '${{ github.event.inputs.useGhTokenWorkflow }}'
 
       - name: Creating a new app
-        uses: INNONAV/AL-Go/Actions/CreateApp@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/CreateApp@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           token: ${{ steps.ReadSecrets.outputs.TokenForPush }}
@@ -94,7 +94,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@ce74ca9100b3feec8226ef3eef0155872c125e2e
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

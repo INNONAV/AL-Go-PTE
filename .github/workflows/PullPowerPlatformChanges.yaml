@@ -38,7 +38,7 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/WorkflowInitialize@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
 
@@ -51,14 +51,14 @@ jobs:
           Add-Content -encoding utf8 -Path $env:GITHUB_ENV -Value "envName=$envName"
 
       - name: Read settings
-        uses: INNONAV/AL-Go/Actions/ReadSettings@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSettings@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           get: powerPlatformSolutionFolder
 
       - name: Read secrets
         id: ReadSecrets
-        uses: INNONAV/AL-Go/Actions/ReadSecrets@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/ReadSecrets@ce74ca9100b3feec8226ef3eef0155872c125e2e
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/DetermineDeploymentEnvironments@ce74ca9100b3feec8226ef3eef0155872c125e2e
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -89,7 +89,7 @@ jobs:
           Add-Content -encoding utf8 -Path $env:GITHUB_ENV -Value "solutionFolder=$solutionFolder"
 
       - name: Pull changes from Power Platform environment
-        uses: INNONAV/AL-Go/Actions/PullPowerPlatformChanges@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/PullPowerPlatformChanges@ce74ca9100b3feec8226ef3eef0155872c125e2e
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -102,7 +102,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@6314d667c8edd88dc76a8d160cc5970f7a9a17a3
+        uses: INNONAV/AL-Go/Actions/WorkflowPostProcess@ce74ca9100b3feec8226ef3eef0155872c125e2e
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
